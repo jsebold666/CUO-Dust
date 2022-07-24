@@ -21,31 +21,17 @@ namespace ClassicUO.Dust765.External
         private Label _text;
         private TextureControl _icon;
 
-        private static OnCastingGump instance = null;
-
-        public static OnCastingGump Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new OnCastingGump();
-                }
-                return instance;
-            }
-        }
-
-        private OnCastingGump() : base(0, 0)
+        public OnCastingGump() : base(0, 0)
         {
             CanMove = false;
             AcceptMouseInput = false;
             CanCloseWithEsc = false;
             CanCloseWithRightClick = false;
             GameActions.iscasting = false;
-
+            IsVisible = false;
 
             BuildGump();
-            IsVisible = false;
+
         }
 
         private static int[] _stopAtClilocs = new int[]
@@ -62,23 +48,24 @@ namespace ClassicUO.Dust765.External
         {
             _startTime = Time.Ticks;
             uint circle;
-            if (_spell_id > 0 && _spell_id <= 64)
-            {
+            try { 
                 SpellAction spell = (SpellAction)_spell_id;
                 circle = (uint)SpellManager.GetCircle(spell);
+                _endTime = _startTime + 400 + circle * 250; // (0.5+ 0.25 * circle) * 1000
+                GameActions.iscasting = true;
             }
-            else
+            catch
             {
-                circle = 3;
+                // cant discover the spell
+                Stop();
+
             }
-            _endTime = _startTime + 500 + circle * 250; // (0.5+ 0.25 * circle) * 1000
-            GameActions.iscasting = true;
-            Console.WriteLine("star: " + _startTime.ToString() + " end: " + _endTime.ToString());
+            //Console.WriteLine("star: " + _startTime.ToString() + " end: " + _endTime.ToString());
     }
 
         public void Stop()
         {
-            Console.WriteLine("STOP CASTING!!");
+            //Console.WriteLine("STOP CASTING!!");
             GameActions.iscasting = false;
             IsVisible = false;
             
@@ -97,7 +84,7 @@ namespace ClassicUO.Dust765.External
             {
                 if (ClilocLoader.Instance.GetString(_stopAtClilocs[i]) == text)
                 {
-                    Console.WriteLine("MESSAGE -- > STOP CASTING!!");
+                    Console.WriteLine("1111MESSAGE -- > STOP CASTING!!");
                     Stop();
                     return;
                 }
@@ -113,7 +100,7 @@ namespace ClassicUO.Dust765.External
             {
                 if (_stopAtClilocs[i] == cliloc)
                 {
-                    Console.WriteLine("CLILOC -- > STOP CASTING!!");
+                    Console.WriteLine("222CLILOC -- > STOP CASTING!!");
                     Stop();
                     return;
                 }
@@ -124,7 +111,7 @@ namespace ClassicUO.Dust765.External
         {
             if (!IsVisible ||
                 ProfileManager.CurrentProfile == null ||
-                !ProfileManager.CurrentProfile.BandageGump ||
+                !ProfileManager.CurrentProfile.OnCastingGump ||
                 World.Player == null ||
                 World.Player.IsDestroyed)
                 return false;
@@ -148,8 +135,8 @@ namespace ClassicUO.Dust765.External
             x += 5;
             y += 10;
 
-            x += ProfileManager.CurrentProfile.BandageGumpOffset.X;
-            y += ProfileManager.CurrentProfile.BandageGumpOffset.Y;
+            //x += ProfileManager.CurrentProfile.BandageGumpOffset.X;
+            //y += ProfileManager.CurrentProfile.BandageGumpOffset.Y;
 
             Y = y;
             X = x;
@@ -173,23 +160,12 @@ namespace ClassicUO.Dust765.External
 
             if (GameActions.iscasting && _updateTime < totalMS)
             {
-                Console.WriteLine("CHECK CASTING UPDATE");
                 _updateTime = (float) totalMS + 125;
                 if (Time.Ticks >= _endTime)
                 {
+                    //Console.WriteLine("3333 STOP CASTING");
                     Stop();
                 }
-                if (GameActions.iscasting)
-                {
-                    IsVisible = true;
-                }
-                else
-                {
-                    Stop();
-                }
-
-                //if (IsVisible)
-                //   _text.Text = $"{Timer}";
             }
             else
             {

@@ -657,6 +657,13 @@ namespace ClassicUO.Game
                 // ## BEGIN - END ## // VISUAL HELPERS
                 LastSpellIndexCursor = index;
                 GameCursor._spellTime = 0;
+
+                if (ProfileManager.CurrentProfile.OnCastingGump)
+                {
+                    if (!iscasting)
+                        World.Player.OnCasting.Start((uint)index);
+                    //Console.WriteLine("spell: " + index.ToString());
+                }
                 // ## BEGIN - END ## // VISUAL HELPERS
 
                 LastSpellIndex = index;
@@ -671,10 +678,11 @@ namespace ClassicUO.Game
                 // ## BEGIN - END ## // VISUAL HELPERS
                 LastSpellIndexCursor = index;
                 GameCursor._spellTime = 0;
-                if (ProfileManager.CurrentProfile.BandageGump)
+                if (ProfileManager.CurrentProfile.OnCastingGump)
                 {
                     if (!iscasting)
                         World.Player.OnCasting.Start((uint)index);
+                    //Console.WriteLine("spell: " + index.ToString());
                 }
                 // ## BEGIN - END ## // VISUAL HELPERS
 
@@ -683,14 +691,29 @@ namespace ClassicUO.Game
             }
         }
 
+        public static void CastSpellRE(int index)
+        {
+            if (index >= 0)
+            {
+                // ## BEGIN - END ## // VISUAL HELPERS
+                LastSpellIndexCursor = index;
+                GameCursor._spellTime = 0;
+                if (ProfileManager.CurrentProfile.OnCastingGump)
+                {
+                    if (!iscasting)
+                        World.Player.OnCasting.Start((uint)index);
+                    //Console.WriteLine("spell: " + index.ToString());
+                }
+                // ## BEGIN - END ## // VISUAL HELPERS
+
+                LastSpellIndex = index;
+                
+            }
+        }
+
         public static void Interrupt()
         {
             iscasting = false;
-        }
-
-        public static void CancelQueueTarget()
-        {
-            //iscasting = false;
         }
 
         public static void OpenGuildGump()

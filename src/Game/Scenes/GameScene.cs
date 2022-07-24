@@ -226,6 +226,14 @@ namespace ClassicUO.Game.Scenes
             {
                 UIManager.Add(new BandageGump());
             }
+            
+            if (ProfileManager.CurrentProfile.OnCastingGump)
+            {
+                if (World.Player.OnCasting == null)
+                {
+                    UIManager.Add(World.Player.OnCasting = new OnCastingGump());
+                }
+            }
 
             // ## BEGIN - END ## // UI/GUMPS
             // ## BEGIN - END ## // LINES

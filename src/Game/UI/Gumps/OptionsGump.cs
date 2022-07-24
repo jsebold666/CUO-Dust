@@ -219,7 +219,7 @@ namespace ClassicUO.Game.UI.Gumps
         private Checkbox _showHPLineInNOH;
         // ## BEGIN - END ## // NAMEOVERHEAD
         // ## BEGIN - END ## // UI/GUMPS
-        private Checkbox _bandageGump, _uccEnableLTBar;
+        private Checkbox _bandageGump, _onCastingGump, _uccEnableLTBar;
         private InputField _bandageGumpOffsetX, _bandageGumpOffsetY;
         // ## BEGIN - END ## // UI/GUMPS
         // ## BEGIN - END ## // TEXTUREMANAGER
@@ -4381,6 +4381,9 @@ namespace ClassicUO.Game.UI.Gumps
             section.Add(_bandageGump = AddCheckBox(null, "Show gump when using bandages", _currentProfile.BandageGump, startX, startY));
             startY += _highlightContainersWhenMouseIsOver.Height + 2;
 
+            section.Add(_onCastingGump = AddCheckBox(null, "On casting gump anti-rubberbanding", _currentProfile.OnCastingGump, startX, startY));
+            startY += _highlightContainersWhenMouseIsOver.Height + 2;
+
             section.Add(AddLabel(null, "Bandage Timer Offset: ", startX, startY));
 
             section.Add
@@ -6084,6 +6087,7 @@ namespace ClassicUO.Game.UI.Gumps
             // ## BEGIN - END ## // NAMEOVERHEAD
             // ## BEGIN - END ## // UI/GUMPS
             _currentProfile.BandageGump = _bandageGump.IsChecked;
+            _currentProfile.OnCastingGump = _onCastingGump.IsChecked;
 
             int.TryParse(_bandageGumpOffsetX.Text, out int bandageGumpOffsetX);
             int.TryParse(_bandageGumpOffsetY.Text, out int bandageGumpOffsetY);

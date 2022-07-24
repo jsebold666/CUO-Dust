@@ -74,11 +74,10 @@ namespace ClassicUO.Game.GameObjects
             // ## BEGIN - END ## // UI/GUMPS
 
             // ## BEGIN - END ## // UI/GUMPS
+
             
-            if (ProfileManager.CurrentProfile.BandageGump)
-            {
-                UIManager.Add(OnCasting = OnCastingGump.Instance);
-            }
+            UIManager.Add(OnCasting = new OnCastingGump());
+
             // ## BEGIN - END ## // UI/GUMPS
 
             for (int i = 0; i < Skills.Length; i++)

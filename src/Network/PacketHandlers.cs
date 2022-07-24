@@ -4760,7 +4760,7 @@ namespace ClassicUO.Network
             string arguments = null;
 
             // ## BEGIN - END ## // UI/GUMPS
-            if (ProfileManager.CurrentProfile.BandageGump)
+            if (ProfileManager.CurrentProfile.OnCastingGump)
             {
                 World.Player?.OnCasting.OnCliloc(cliloc);
             }

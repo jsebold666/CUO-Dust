@@ -397,6 +397,8 @@ namespace ClassicUO.Configuration
         public bool UOClassicCombatLTBar_Locked { get; set; } = false;
         public Point BandageGumpOffset { get; set; } = new Point(0, 0);
         public bool BandageGump { get; set; }
+
+        public bool OnCastingGump { get; set; }
         // ## BEGIN - END ## // UI/GUMPS
         // ## BEGIN - END ## // TEXTUREMANAGER
         public bool TextureManagerEnabled { get; set; } = false;
