@@ -259,6 +259,7 @@ namespace ClassicUO.Network
         private static void TargetCursor(ref StackDataReader p)
         {
             TargetManager.SetTargeting((CursorTarget) p.ReadUInt8(), p.ReadUInt32BE(), (TargetType) p.ReadUInt8());
+            GameActions.iscasting = false;
 
             if (World.Party.PartyHealTimer < Time.Ticks && World.Party.PartyHealTarget != 0)
             {
@@ -367,7 +368,7 @@ namespace ClassicUO.Network
 
                 if (damage > 0)
                 {
-                    //GameActions.iscasting = false;
+                    GameActions.iscasting = false;
                     World.WorldTextManager.AddDamage(entity, damage);
                 }
             }

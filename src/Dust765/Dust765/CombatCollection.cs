@@ -530,7 +530,7 @@ namespace ClassicUO.Dust765.Dust765
             {
                 if (!GameActions.iscasting) 
                     World.Player.OnCasting.Start((uint)GameActions.LastSpellIndexCursor);
-                //Console.WriteLine("spell: " + GameActions.LastSpellIndexCursor.ToString());
+                Console.WriteLine("spell by cliloc: " + GameActions.LastSpellIndexCursor.ToString());
             }
         }
         // ## BEGIN - END ## // CURSOR FIXES

@@ -60,6 +60,10 @@ namespace ClassicUO.Dust765.External
             AcceptMouseInput = false;
             CanCloseWithEsc = false;
             CanCloseWithRightClick = false;
+            // EDIT: MARK
+            _useTime = false;
+            IsVisible = false;
+            // EDIT-END: MARK
 
             BuildGump();
         }
@@ -68,20 +72,23 @@ namespace ClassicUO.Dust765.External
         {
             _useTime = true;
             _startTime = Time.Ticks;
+            // EDIT: MARK
             if (World.Player.Dexterity >= 80)
             {
-                Timer = Convert.ToUInt32(8 - Math.Floor((World.Player.Dexterity - 80)*1.0) / 20) - 1 ;
+                Timer = Convert.ToUInt32(8 - Math.Floor((World.Player.Dexterity - 80) * 1.0) / 20) - 1;
             }
-            else 
+            else
             {
-                Timer = 7;
-            }                        
-                 
+                Timer = 8;
+            }
+            // EDIT-END: MARK                     
+
         }
 
         public void Stop()
         {
             _useTime = false;
+            IsVisible = false;
         }
 
         public void OnMessage(string text, uint hue, string name, bool isunicode = true)
@@ -184,54 +191,27 @@ namespace ClassicUO.Dust765.External
                 return;
             }
 
-            if (_updateTime < totalMS)
+            if (_useTime)
             {
-                _updateTime = (float) totalMS + 125;
-                IsVisible = false;
-                //Timer = 0;
-
-                /*
-                switch (Settings.GlobalSettings.ShardType)
+                IsVisible = true;
+                //Timer = (Time.Ticks - _startTime) / 1000;
+                // EDIT: MARK
+                if ((Time.Ticks - _startTime) / 1000 > 0.750)
                 {
-                    case 2: // outlands
-                        if (World.Player.EnergyResistance > 0)
-                        {
-                            IsVisible = true;
-                            Timer = (uint) World.Player.EnergyResistance;
-                        }
-                        break;
-
-                    default:
-                        if (_useTime)
-                        {
-                            IsVisible = true;
-                            Timer = (Time.Ticks - _startTime) / 1000;
-                            if (Timer > 20) // fail-safe (this can never be reached)
-                            {
-                                Stop();
-                                IsVisible = false;
-                            }
-                        }
-                        break;
-                }
-                */
-                if (_useTime)
-                {
-                    IsVisible = true;
-                    if ((Time.Ticks - _startTime) / 1000  > 0.750) {
-                        _startTime = Time.Ticks;
-                        Timer = Timer - 1;
-                    }                    
-                    if (Timer < 0) // fail-safe (this can never be reached)
-                    {
-                        Stop();
-                        IsVisible = false;
-                    }
+                    _startTime = Time.Ticks;
+                    Timer = Timer - 1;
                 }
 
+                if (Timer > 20 || Timer <= 0) // fail-safe (this can never be reached)
+                {
+                    Stop();
+                    IsVisible = false;
+                }
                 if (IsVisible)
                     _text.Text = $"{Timer}";
+                // EDIT-END: MARK
             }
+
         }
 
         private void BuildGump()

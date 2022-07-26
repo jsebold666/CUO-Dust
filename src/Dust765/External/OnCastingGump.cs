@@ -48,6 +48,7 @@ namespace ClassicUO.Dust765.External
         {
             _startTime = Time.Ticks;
             uint circle;
+            //IsVisible = true;
             try { 
                 SpellAction spell = (SpellAction)_spell_id;
                 circle = (uint)SpellManager.GetCircle(spell);
@@ -84,7 +85,6 @@ namespace ClassicUO.Dust765.External
             {
                 if (ClilocLoader.Instance.GetString(_stopAtClilocs[i]) == text)
                 {
-                    Console.WriteLine("1111MESSAGE -- > STOP CASTING!!");
                     Stop();
                     return;
                 }
@@ -100,7 +100,6 @@ namespace ClassicUO.Dust765.External
             {
                 if (_stopAtClilocs[i] == cliloc)
                 {
-                    Console.WriteLine("222CLILOC -- > STOP CASTING!!");
                     Stop();
                     return;
                 }
