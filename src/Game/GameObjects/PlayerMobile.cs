@@ -1598,7 +1598,7 @@ namespace ClassicUO.Game.GameObjects
 
         public bool Walk(Direction direction, bool run)
         {
-            if (GameActions.iscasting || Walker.WalkingFailed || Walker.LastStepRequestTime > Time.Ticks || Walker.StepsCount >= Constants.MAX_STEP_COUNT || Client.Version >= ClientVersion.CV_60142 && IsParalyzed)
+            if (Walker.WalkingFailed || Walker.LastStepRequestTime > Time.Ticks || Walker.StepsCount >= Constants.MAX_STEP_COUNT || Client.Version >= ClientVersion.CV_60142 && IsParalyzed)
             {
                 return false;
             }
@@ -1631,6 +1631,7 @@ namespace ClassicUO.Game.GameObjects
 
             if ((oldDirection & Direction.Mask) == (direction & Direction.Mask))
             {
+                if (GameActions.iscasting) return false;
                 Direction newDir = direction;
                 int newX = x;
                 int newY = y;

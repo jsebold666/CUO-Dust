@@ -44,7 +44,7 @@ namespace ClassicUO.Dust765.External
         };
 
 
-        public void Start(uint _spell_id)
+        public void Start(uint _spell_id, uint _re = 0)
         {
             _startTime = Time.Ticks;
             uint circle;
@@ -52,7 +52,7 @@ namespace ClassicUO.Dust765.External
             try { 
                 SpellAction spell = (SpellAction)_spell_id;
                 circle = (uint)SpellManager.GetCircle(spell);
-                _endTime = _startTime + 400 + circle * 250; // (0.5+ 0.25 * circle) * 1000
+                _endTime = _startTime + 400 + circle * 250 + _re; // (0.5+ 0.25 * circle) * 1000
                 GameActions.iscasting = true;
             }
             catch

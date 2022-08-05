@@ -701,7 +701,7 @@ namespace ClassicUO.Game
                 if (ProfileManager.CurrentProfile.OnCastingGump)
                 {
                     if (!iscasting)
-                        World.Player.OnCasting.Start((uint)index);
+                        World.Player.OnCasting.Start((uint)index, 100);
                     //Console.WriteLine("spell: " + index.ToString());
                 }
                 // ## BEGIN - END ## // VISUAL HELPERS
@@ -711,10 +711,43 @@ namespace ClassicUO.Game
             }
         }
 
+        public static void CastSpellCA(int index)
+        {
+            if (index >= 0)
+            {
+                // ## BEGIN - END ## // VISUAL HELPERS
+                LastSpellIndexCursor = index;
+                GameCursor._spellTime = 0;
+                if (ProfileManager.CurrentProfile.OnCastingGump)
+                {
+                    if (!iscasting)
+                        World.Player.OnCasting.Start((uint)index);
+                    //Console.WriteLine("spell: " + index.ToString());
+                }
+                // ## BEGIN - END ## // VISUAL HELPERS
+
+                LastSpellIndex = index;
+
+            }
+        }
+
         public static void Interrupt()
         {
             iscasting = false;
         }
+
+        public static Point GetMousePosition() {
+            if (SelectedObject.Object is GameObject gobj)
+            {
+                return new Point(gobj.X, gobj.Y);
+            }
+            else
+            {
+                return new Point();
+            }
+        }
+
+         
 
         public static void OpenGuildGump()
         {

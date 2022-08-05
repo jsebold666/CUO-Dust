@@ -101,7 +101,7 @@ namespace ClassicUO.Game.Managers
         public StepInfo[] StepInfos = new StepInfo[Constants.MAX_STEP_COUNT]
         {
             new StepInfo(), new StepInfo(), new StepInfo(),
-            //new StepInfo(), new StepInfo()
+            new StepInfo(), new StepInfo()
         };
         public int StepsCount;
         public int UnacceptedPacketsCount;
